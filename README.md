@@ -23,11 +23,13 @@ Si el gestor de paquetes se interrumpe abruptamente (ej. Ctrl + C), la base de d
 sudo rm -f /var/lib/rpm/.rpmdb.lock /var/lib/dnf/lock
 ``
 # 2. Reconstruir el índice de la base de datos RPM
+``bash
 sudo rpm --rebuilddb
-
+``
 # 3. Sincronizar y reparar paquetes instalados a medias
+``bash
 sudo dnf distro-sync -y 
-
+``
 ## 3. Optimizacion Extrema de DNF (Descargas 5x mas rapidas)
 Por defecto, DNF descarga los paquetes de uno en uno y actualiza constantemente los metadatos desde la red.
 
@@ -35,26 +37,33 @@ Por defecto, DNF descarga los paquetes de uno en uno y actualiza constantemente 
 Editar el archivo de configuración en /etc/dnf/dnf.conf e inclu[main]
 
 # Habilitar descargas simultáneas (máximo 10)
+``bash
 max_parallel_downloads=10
-
+``
 # Habilitar Delta RPMs (descarga solo diferencias de código)
+``bash
 deltarpm=True
-
+``
 # Cambiar la confirmación por defecto a "Sí"
+``bash
 defaultyes=True
-
+``
 # Evitar la descarga constante de metadatos (expira cada 24 horas)
+``bash
 metadata_expire=86400
-
+``
 # Limpiar el cache para aplicar los cambios: 
+``bash
 sudo dnf clean all
-
+``
 # paso 2: Migracion a DNF5 (EL motor ultra veloz)
 Para maximizar la velocidad de procesamiento eliminando el delay de Python, instalamos y utilizamos el nuevo motor escrito en C++:
 
 # Instalar el nuevo motor
+``bash
 sudo dnf install dnf5 -y
-
+``
 # Comando de actualización definitivo a partir de ahora
+``bash
 sudo dnf5 upgrade -y
-
+``
