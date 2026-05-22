@@ -19,8 +19,9 @@ sudo systemctl mask systemd-tmpfiles-clean.timer
 Si el gestor de paquetes se interrumpe abruptamente (ej. Ctrl + C), la base de datos de paquetes (rpmdb) puede quedar bloqueada o corrupta en un estado de sueño ininterrumpible (D State). Para repararla de forma segura tras un reinicio, se ejecutan:
 
 # 1. Eliminar bloqueos fantasmas de memoria
+``bash
 sudo rm -f /var/lib/rpm/.rpmdb.lock /var/lib/dnf/lock
-
+``
 # 2. Reconstruir el índice de la base de datos RPM
 sudo rpm --rebuilddb
 
